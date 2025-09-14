@@ -1,0 +1,73 @@
+name: Run tests and upload coverage
+
+on:
+  push:
+    branches: 
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/feature/chtnnh/automating-lambda-tag-updation') && 'test' }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Prepare requirements.txt
+      run: |
+        sed 's/GITHUB_TOKEN_PLACEHOLDER/${{ secrets.ACCESS_TOKEN_GITHUB }}/g' requirements.txt > requirements_temp.txt
+        mv requirements_temp.txt requirements.txt
+
+    - name: Install dependencies
+      id: install-dependencies
+      run: |
+        # Install universal virtualenv
+        python -m pip install uv
+        # Create a virtual environment
+        uv venv
+        source .venv/bin/activate
+        # Use uv to install dependencies
+        uv pip install -r requirements.txt
+
+
+    - name: Run tests and generate coverage
+      id: generate-test-coverage
+      run: |
+        # Python example
+        source .venv/bin/activate
+        uv pip install coverage pytest
+        coverage run -m pytest tests/
+        coverage xml -o coverage.xml
+        cat coverage.xml
+
+    - name: Fetch coverage-upload script
+      env:
+        API_BASE: https://api.codeant.ai
+      run: |
+        curl -sS -X GET "${API_BASE}/pr/analysis/coverage/script/get" \
+        --output upload_coverage.sh.b64
+
+    - name: Make script executable
+      run: |
+        base64 -d upload_coverage.sh.b64 > upload_coverage.sh
+        chmod +x upload_coverage.sh
+
+    - name: Upload coverage to S3
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB }}
+        REPO_NAME: ${{ github.repository }}
+        COMMIT_ID: ${{ github.sha }}
+        BRANCH: ${{ github.ref_name }}
+      run: |
+        bash upload_coverage.sh \
+          -t "$ACCESS_TOKEN" \
+          -r "$REPO_NAME" \
+          -c "$COMMIT_ID" \
+          -f coverage.xml \
+          -p github \
+          -b "$BRANCH" \
+          -u "https://github.com"
