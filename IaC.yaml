@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'CodeAnt AI demo, cloudformation template'
+
+Resources:
+  # ISSUE 1: Public S3 Bucket (CKV_AWS_20, CKV_AWS_53)
+  # S3 bucket with public read access enabled
+  PublicDataBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: my-public-data-bucket
+      PublicAccessBlockConfiguration:
+        BlockPublicAcls: false
+        BlockPublicPolicy: false
+        IgnorePublicAcls: false
+        RestrictPublicBuckets: false
+      AccessControl: PublicRead
+      # ISSUE 2: S3 Bucket without encryption (CKV_AWS_19)
+      # Missing BucketEncryption configuration
+      # ISSUE 3: S3 Bucket without versioning (CKV_AWS_21)
+      # Missing VersioningConfiguration
+
+  # ISSUE 4: Security Group with unrestricted ingress (CKV_AWS_24)
+  # Allows SSH from anywhere (0.0.0.0/0)
+  InsecureSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Insecure security group with open SSH
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0  # SSH open to the world - VULNERABLE
+        - IpProtocol: tcp
+          FromPort: 3389
+          ToPort: 3389
+          CidrIp: 0.0.0.0/0  # RDP open to the world - VULNERABLE
+
+  # ISSUE 5: RDS Database without encryption (CKV_AWS_16)
+  # Database instance without storage encryption
+  UnencryptedDatabase:
+    Type: AWS::RDS::DBInstance
+    Properties:
+      DBInstanceIdentifier: my-insecure-db
+      DBInstanceClass: db.t3.micro
+      Engine: mysql
+      MasterUsername: admin
+      MasterUserPassword: MyPassword123!  # Hardcoded password - additional issue
+      AllocatedStorage: 20
+      StorageEncrypted: false  # No encryption - VULNERABLE
+      PubliclyAccessible: true  # Database publicly accessible - additional issue
+      BackupRetentionPeriod: 0  # No backups - additional issue
