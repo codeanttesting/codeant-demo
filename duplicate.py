@@ -1,5 +1,4 @@
 def calculate_discount(amount, customer_type):
-    """Calculate discount for a customer"""
     # DUPLICATE BLOCK 2 - First occurrence
     if amount <= 100:
         discount = amount * 0.05
@@ -14,7 +13,6 @@ def calculate_discount(amount, customer_type):
     return final_amount
 
 def calculate_refund(amount, customer_type):
-    """Calculate refund for a customer"""
     # DUPLICATE BLOCK 2 - Exact copy (lines 40-49 repeated)
     if amount <= 100:
         discount = amount * 0.05

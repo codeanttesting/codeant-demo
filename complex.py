@@ -1,238 +1,255 @@
-def analyze_and_process_dataset(data, config=None, verbose=False):
-    """
-    Complex function that performs comprehensive data analysis and processing.
-    Handles validation, transformation, statistical analysis, and report generation.
+def analyze_multi_dimensional_data(data, config, mode='standard', depth=0, state=None):
+    if state is None:
+        state = {'errors': [], 'warnings': [], 'cache': {}, 'counter': 0}
     
-    Args:
-        data: List of dictionaries containing transaction records
-        config: Optional configuration dictionary
-        verbose: Enable detailed logging
+    results = []
+    processed = 0
+    skipped = 0
     
-    Returns:
-        Dictionary containing analysis results, processed data, and metadata
-    """
-    import json
-    import hashlib
-    from datetime import datetime, timedelta
-    from collections import defaultdict, Counter
-    import statistics
+    # Complex initial validation with multiple branches
+    if not data:
+        if config.get('strict'):
+            return None
+        elif config.get('default_empty'):
+            return {'data': [], 'status': 'empty'}
+        else:
+            state['errors'].append('No data provided')
+            return {'error': True}
     
-    # Initialize configuration with defaults
-    if config is None:
-        config = {
-            'threshold': 1000,
-            'categories': ['electronics', 'clothing', 'food', 'other'],
-            'date_format': '%Y-%m-%d',
-            'currency': 'USD',
-            'tax_rate': 0.08,
-            'discount_tiers': [0.05, 0.10, 0.15, 0.20]
-        }
-    
-    # Initialize result containers
-    results = {
-        'processed_data': [],
-        'statistics': {},
-        'anomalies': [],
-        'summary': {},
-        'metadata': {
-            'processing_time': None,
-            'total_records': 0,
-            'valid_records': 0,
-            'invalid_records': 0,
-            'processing_id': None
-        }
-    }
-    
-    start_time = datetime.now()
-    errors = []
-    category_totals = defaultdict(float)
-    monthly_totals = defaultdict(float)
-    customer_purchases = defaultdict(list)
-    
-    # Generate unique processing ID
-    process_hash = hashlib.md5(f"{start_time}{len(data)}".encode()).hexdigest()[:8]
-    results['metadata']['processing_id'] = process_hash
-    
-    if verbose:
-        print(f"Starting processing with ID: {process_hash}")
-        print(f"Total records to process: {len(data)}")
-    
-    # Data validation and processing loop
-    for index, record in enumerate(data):
-        try:
-            # Validate required fields
-            required_fields = ['id', 'amount', 'date', 'customer_id', 'category']
-            missing_fields = [field for field in required_fields if field not in record]
-            
-            if missing_fields:
-                errors.append({
-                    'index': index,
-                    'error': f"Missing fields: {missing_fields}",
-                    'record': record
-                })
-                results['metadata']['invalid_records'] += 1
-                continue
-            
-            # Parse and validate date
-            try:
-                transaction_date = datetime.strptime(record['date'], config['date_format'])
-                month_key = transaction_date.strftime('%Y-%m')
-            except ValueError as e:
-                errors.append({
-                    'index': index,
-                    'error': f"Invalid date format: {e}",
-                    'record': record
-                })
-                results['metadata']['invalid_records'] += 1
-                continue
-            
-            # Validate amount
-            try:
-                amount = float(record['amount'])
-                if amount < 0:
-                    raise ValueError("Negative amount not allowed")
-            except (ValueError, TypeError) as e:
-                errors.append({
-                    'index': index,
-                    'error': f"Invalid amount: {e}",
-                    'record': record
-                })
-                results['metadata']['invalid_records'] += 1
-                continue
-            
-            # Validate category
-            category = record.get('category', 'other').lower()
-            if category not in config['categories']:
-                category = 'other'
-            
-            # Calculate tax and discounts
-            tax_amount = amount * config['tax_rate']
-            discount_rate = 0
-            
-            if amount > 5000:
-                discount_rate = config['discount_tiers'][3]
-            elif amount > 2000:
-                discount_rate = config['discount_tiers'][2]
-            elif amount > 1000:
-                discount_rate = config['discount_tiers'][1]
-            elif amount > 500:
-                discount_rate = config['discount_tiers'][0]
-            
-            discount_amount = amount * discount_rate
-            final_amount = amount + tax_amount - discount_amount
-            
-            # Create processed record
-            processed_record = {
-                'id': record['id'],
-                'customer_id': record['customer_id'],
-                'original_amount': amount,
-                'tax_amount': round(tax_amount, 2),
-                'discount_rate': discount_rate,
-                'discount_amount': round(discount_amount, 2),
-                'final_amount': round(final_amount, 2),
-                'category': category,
-                'date': record['date'],
-                'month': month_key,
-                'processing_timestamp': datetime.now().isoformat(),
-                'flags': []
-            }
-            
-            # Check for anomalies
-            if amount > config['threshold'] * 10:
-                processed_record['flags'].append('high_value')
-                results['anomalies'].append({
-                    'type': 'high_value_transaction',
-                    'record_id': record['id'],
-                    'amount': amount,
-                    'threshold_exceeded_by': amount - (config['threshold'] * 10)
-                })
-            
-            # Update aggregations
-            category_totals[category] += final_amount
-            monthly_totals[month_key] += final_amount
-            customer_purchases[record['customer_id']].append(final_amount)
-            
-            results['processed_data'].append(processed_record)
-            results['metadata']['valid_records'] += 1
-            
-        except Exception as e:
-            errors.append({
-                'index': index,
-                'error': f"Unexpected error: {str(e)}",
-                'record': record
-            })
-            results['metadata']['invalid_records'] += 1
-    
-    # Calculate statistics if we have valid data
-    if results['processed_data']:
-        all_amounts = [r['final_amount'] for r in results['processed_data']]
+    # NESTING LEVEL 1: Main processing loop
+    for i, item in enumerate(data):
+        state['counter'] += 1
         
-        results['statistics'] = {
-            'total_revenue': round(sum(all_amounts), 2),
-            'average_transaction': round(statistics.mean(all_amounts), 2),
-            'median_transaction': round(statistics.median(all_amounts), 2),
-            'std_deviation': round(statistics.stdev(all_amounts), 2) if len(all_amounts) > 1 else 0,
-            'min_transaction': round(min(all_amounts), 2),
-            'max_transaction': round(max(all_amounts), 2),
-            'total_tax_collected': round(sum(r['tax_amount'] for r in results['processed_data']), 2),
-            'total_discounts_given': round(sum(r['discount_amount'] for r in results['processed_data']), 2)
-        }
+        # NESTING LEVEL 2: Type checking with complex conditions
+        if isinstance(item, dict) and 'type' in item:
+            item_type = item['type']
+            
+            # NESTING LEVEL 3: Mode-based processing
+            if mode == 'standard' or (mode == 'advanced' and item.get('advanced', False)):
+                
+                # NESTING LEVEL 4: Type-specific processing
+                if item_type in ['A', 'B', 'C'] and item.get('enabled', True):
+                    
+                    # NESTING LEVEL 5: Validation loop
+                    for validation_rule in config.get('validations', []):
+                        if validation_rule.get('type') == item_type:
+                            
+                            # NESTING LEVEL 6: Field validation
+                            for field_name, field_rules in validation_rule.get('fields', {}).items():
+                                if field_name in item:
+                                    field_value = item[field_name]
+                                    
+                                    # NESTING LEVEL 7: Rule checking with complex conditions
+                                    if isinstance(field_rules, dict):
+                                        for rule_type, rule_value in field_rules.items():
+                                            
+                                            # NESTING LEVEL 8: Deep rule application
+                                            if rule_type == 'range' and isinstance(field_value, (int, float)):
+                                                if 'min' in rule_value and 'max' in rule_value:
+                                                    if field_value < rule_value['min']:
+                                                        if config.get('auto_fix'):
+                                                            item[field_name] = rule_value['min']
+                                                        elif config.get('skip_invalid'):
+                                                            skipped += 1
+                                                            break
+                                                        else:
+                                                            state['errors'].append(f"Value too low: {field_name}")
+                                                            if len(state['errors']) > config.get('max_errors', 100):
+                                                                return {'error': 'too_many_errors', 'partial': results}
+                                                    elif field_value > rule_value['max']:
+                                                        if config.get('auto_fix'):
+                                                            item[field_name] = rule_value['max']
+                                                        else:
+                                                            state['warnings'].append(f"Value too high: {field_name}")
+                                            
+                                            elif rule_type == 'pattern' and isinstance(field_value, str):
+                                                # More nesting for pattern matching
+                                                import re
+                                                if 'regex' in rule_value:
+                                                    if not re.match(rule_value['regex'], field_value):
+                                                        if 'default' in rule_value:
+                                                            item[field_name] = rule_value['default']
+                                                        elif 'transform' in rule_value:
+                                                            if rule_value['transform'] == 'upper':
+                                                                item[field_name] = field_value.upper()
+                                                            elif rule_value['transform'] == 'lower':
+                                                                item[field_name] = field_value.lower()
+                                                            elif rule_value['transform'] == 'trim':
+                                                                item[field_name] = field_value.strip()
+                                            
+                                            elif rule_type == 'custom' and callable(rule_value.get('function')):
+                                                try:
+                                                    result = rule_value['function'](field_value)
+                                                    if not result:
+                                                        if config.get('strict'):
+                                                            return {'error': f'Custom validation failed for {field_name}'}
+                                                        else:
+                                                            continue
+                                                except Exception as e:
+                                                    state['errors'].append(str(e))
+                    
+                    # Another complex branch at level 4
+                    if item_type == 'A':
+                        # NESTING LEVEL 5: Type A specific processing
+                        if 'sub_items' in item and isinstance(item['sub_items'], list):
+                            for j, sub_item in enumerate(item['sub_items']):
+                                # NESTING LEVEL 6: Sub-item processing
+                                if isinstance(sub_item, dict):
+                                    if 'value' in sub_item:
+                                        # NESTING LEVEL 7: Value transformation
+                                        if sub_item['value'] > 1000:
+                                            if config.get('scale_large'):
+                                                sub_item['value'] /= 1000
+                                                sub_item['unit'] = 'k'
+                                            elif config.get('cap_values'):
+                                                sub_item['value'] = 1000
+                                        elif sub_item['value'] < 0:
+                                            if config.get('abs_negative'):
+                                                sub_item['value'] = abs(sub_item['value'])
+                                            elif config.get('zero_negative'):
+                                                sub_item['value'] = 0
+                                            else:
+                                                state['warnings'].append(f"Negative value at index {j}")
+                                    
+                                    # NESTING LEVEL 7: Nested recursion for sub-items
+                                    if 'nested_data' in sub_item and depth < 5:
+                                        nested_result = analyze_multi_dimensional_data(
+                                            sub_item['nested_data'],
+                                            config,
+                                            mode,
+                                            depth + 1,
+                                            state
+                                        )
+                                        if nested_result and not nested_result.get('error'):
+                                            sub_item['nested_result'] = nested_result
+                                        elif config.get('propagate_errors'):
+                                            return nested_result
+                    
+                    elif item_type == 'B':
+                        # NESTING LEVEL 5: Type B matrix processing
+                        if 'matrix' in item and isinstance(item['matrix'], list):
+                            for row_idx, row in enumerate(item['matrix']):
+                                if isinstance(row, list):
+                                    for col_idx, cell in enumerate(row):
+                                        # NESTING LEVEL 7: Cell processing
+                                        if isinstance(cell, (int, float)):
+                                            # NESTING LEVEL 8: Complex cell transformation
+                                            if row_idx == col_idx:  # Diagonal
+                                                if config.get('diagonal_multiplier'):
+                                                    item['matrix'][row_idx][col_idx] *= config['diagonal_multiplier']
+                                            elif row_idx < col_idx:  # Upper triangle
+                                                if config.get('upper_triangle_zero'):
+                                                    item['matrix'][row_idx][col_idx] = 0
+                                                elif config.get('upper_triangle_mirror'):
+                                                    item['matrix'][row_idx][col_idx] = item['matrix'][col_idx][row_idx]
+                                            else:  # Lower triangle
+                                                if config.get('lower_triangle_sum'):
+                                                    item['matrix'][row_idx][col_idx] += row_idx + col_idx
+                                        
+                                        # More conditions at level 8
+                                        if cell == 0 and config.get('replace_zeros'):
+                                            item['matrix'][row_idx][col_idx] = config.get('zero_replacement', 1)
+                                        elif cell < 0 and row_idx > 0 and col_idx > 0:
+                                            if config.get('negative_handling') == 'average':
+                                                avg = (item['matrix'][row_idx-1][col_idx] + 
+                                                      item['matrix'][row_idx][col_idx-1]) / 2
+                                                item['matrix'][row_idx][col_idx] = avg
+                    
+                    elif item_type == 'C':
+                        # NESTING LEVEL 5: Type C graph processing
+                        if 'nodes' in item and 'edges' in item:
+                            for node in item['nodes']:
+                                if isinstance(node, dict) and 'id' in node:
+                                    # NESTING LEVEL 6: Node processing
+                                    node_edges = [e for e in item['edges'] if e.get('from') == node['id'] or e.get('to') == node['id']]
+                                    
+                                    for edge in node_edges:
+                                        # NESTING LEVEL 7: Edge processing
+                                        if edge.get('weight', 0) > config.get('max_edge_weight', 100):
+                                            if config.get('normalize_weights'):
+                                                edge['weight'] = edge['weight'] / config.get('weight_divisor', 10)
+                                            else:
+                                                state['warnings'].append(f"Heavy edge: {edge}")
+                                        
+                                        # NESTING LEVEL 8: Path finding logic
+                                        if 'paths' in config and node['id'] in config['paths']:
+                                            target = config['paths'][node['id']]
+                                            if edge.get('to') == target:
+                                                edge['is_path'] = True
+                                                if 'path_multiplier' in config:
+                                                    edge['weight'] *= config['path_multiplier']
+                
+                # Different mode branch at level 3
+                elif mode == 'analytical' and item.get('analyze', True):
+                    # NESTING LEVEL 4: Analytical processing
+                    if 'metrics' in item:
+                        for metric_name, metric_value in item['metrics'].items():
+                            # NESTING LEVEL 5: Metric processing
+                            if isinstance(metric_value, dict):
+                                for sub_metric, sub_value in metric_value.items():
+                                    # NESTING LEVEL 6: Sub-metric analysis
+                                    if isinstance(sub_value, list):
+                                        for idx, val in enumerate(sub_value):
+                                            # NESTING LEVEL 7: Value analysis
+                                            if isinstance(val, (int, float)):
+                                                if idx > 0:
+                                                    # NESTING LEVEL 8: Trend detection
+                                                    prev_val = sub_value[idx - 1]
+                                                    if isinstance(prev_val, (int, float)):
+                                                        change = val - prev_val
+                                                        if abs(change) > config.get('spike_threshold', 50):
+                                                            if config.get('smooth_spikes'):
+                                                                sub_value[idx] = (val + prev_val) / 2
+                                                            else:
+                                                                state['warnings'].append(f"Spike detected: {metric_name}")
+                                                        elif change > 0 and config.get('track_growth'):
+                                                            if 'growth' not in item:
+                                                                item['growth'] = []
+                                                            item['growth'].append({
+                                                                'metric': metric_name,
+                                                                'index': idx,
+                                                                'change': change
+                                                            })
+            
+            # Add to results after all processing
+            if state['counter'] % config.get('batch_size', 100) == 0:
+                if config.get('intermediate_save'):
+                    # Save intermediate results
+                    state['cache'][f'batch_{state["counter"]}'] = results.copy()
+            
+            processed += 1
+            results.append(item)
         
-        # Category analysis
-        results['statistics']['category_breakdown'] = {
-            cat: round(total, 2) for cat, total in category_totals.items()
-        }
+        # Non-dict item processing
+        elif isinstance(item, list) and depth < config.get('max_recursion', 10):
+            # Recursive processing for lists
+            list_result = analyze_multi_dimensional_data(item, config, mode, depth + 1, state)
+            if list_result:
+                results.append(list_result)
         
-        # Monthly trend analysis
-        results['statistics']['monthly_trends'] = {
-            month: round(total, 2) for month, total in sorted(monthly_totals.items())
-        }
+        # Break conditions
+        if processed >= config.get('max_items', float('inf')):
+            break
         
-        # Customer analysis
-        customer_totals = {cid: sum(amounts) for cid, amounts in customer_purchases.items()}
-        top_customers = sorted(customer_totals.items(), key=lambda x: x[1], reverse=True)[:10]
-        results['statistics']['top_customers'] = [
-            {'customer_id': cid, 'total_spent': round(total, 2)} 
-            for cid, total in top_customers
-        ]
-        
-        # Calculate percentiles
-        results['statistics']['percentiles'] = {
-            '25th': round(statistics.quantiles(all_amounts, n=4)[0], 2),
-            '50th': round(statistics.quantiles(all_amounts, n=4)[1], 2),
-            '75th': round(statistics.quantiles(all_amounts, n=4)[2], 2),
-            '90th': round(statistics.quantiles(all_amounts, n=10)[8], 2) if len(all_amounts) >= 10 else 0
+        if skipped >= config.get('max_skipped', 50):
+            state['errors'].append('Too many items skipped')
+            break
+    
+    # Complex final processing and return logic
+    if len(results) == 0:
+        if config.get('require_results'):
+            return {'error': 'no_results', 'state': state}
+        else:
+            return {'data': [], 'state': state}
+    elif len(state['errors']) > 0 and config.get('fail_on_errors'):
+        return {'error': 'processing_errors', 'errors': state['errors'], 'partial_results': results}
+    elif len(state['warnings']) > config.get('max_warnings', 100):
+        return {'warning': 'too_many_warnings', 'data': results, 'state': state}
+    else:
+        return {
+            'data': results,
+            'processed': processed,
+            'skipped': skipped,
+            'state': state,
+            'success': True
         }
-    
-    # Generate summary
-    results['summary'] = {
-        'success_rate': round((results['metadata']['valid_records'] / len(data)) * 100, 2) if data else 0,
-        'processing_date': start_time.strftime('%Y-%m-%d %H:%M:%S'),
-        'config_used': config,
-        'error_count': len(errors),
-        'anomaly_count': len(results['anomalies']),
-        'unique_customers': len(customer_purchases),
-        'unique_categories': len(category_totals),
-        'date_range': {
-            'start': min(r['date'] for r in results['processed_data']) if results['processed_data'] else None,
-            'end': max(r['date'] for r in results['processed_data']) if results['processed_data'] else None
-        }
-    }
-    
-    # Store errors if any
-    if errors:
-        results['errors'] = errors[:100]  # Limit to first 100 errors
-    
-    # Calculate processing time
-    end_time = datetime.now()
-    processing_duration = (end_time - start_time).total_seconds()
-    results['metadata']['processing_time'] = f"{processing_duration:.3f} seconds"
-    results['metadata']['total_records'] = len(data)
-    
-    if verbose:
-        print(f"Processing completed in {processing_duration:.3f} seconds")
-        print(f"Valid records: {results['metadata']['valid_records']}")
-        print(f"Invalid records: {results['metadata']['invalid_records']}")
-        print(f"Anomalies detected: {len(results['anomalies'])}")
-    
-    return results
