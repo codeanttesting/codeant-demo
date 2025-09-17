@@ -1,0 +1,75 @@
+name: Quality Gate Scan
+
+on:
+  push:
+    branches: 
+      - '**'
+
+permissions:
+  contents: read
+
+jobs:
+  quality-gate:
+    name: Quality Gate Scan
+    runs-on: ubuntu-latest
+    environment: ${{ (github.ref == 'refs/heads/dev' || github.ref == 'refs/heads/main') && 'production' || 'test' }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Fetch quality gates script
+      env:
+        API_BASE: https://api.codeant.ai
+      run: |
+        curl -sS -X GET "${API_BASE}/analysis/ci/quality-gates/script/get" \
+          --output quality_gates.sh.b64
+    
+    - name: Make script executable
+      run: |
+        base64 -d quality_gates.sh.b64 > quality_gates.sh
+        chmod +x quality_gates.sh
+
+    - name: Start Quality Gate Scan
+      id: start-scan
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB }}
+        REPO_NAME: ${{ github.repository }}
+        COMMIT_ID: ${{ github.sha }}
+      run: |
+        echo "Starting quality gate scan..."
+        ./quality_gates.sh \
+          -a "$ACCESS_TOKEN" \
+          -r "$REPO_NAME" \
+          -c "$COMMIT_ID" \
+          -s github \
+          -o start
+        echo "Quality gate scan initiated successfully"
+
+    - name: Poll for Quality Gate Results
+      id: poll-results
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN_GITHUB }}
+        REPO_NAME: ${{ github.repository }}
+        COMMIT_ID: ${{ github.sha }}
+      run: |
+        echo "Polling for quality gate results..."
+        ./quality_gates.sh \
+          -a "$ACCESS_TOKEN" \
+          -r "$REPO_NAME" \
+          -c "$COMMIT_ID" \
+          -s github \
+          -o results \
+          -t 300 \
+          -p 15
+
+    - name: Quality Gate Status
+      if: always()
+      run: |
+        if [ "${{ job.status }}" = "success" ]; then
+          echo "✅ Quality Gate PASSED - No secrets detected"
+          echo "::notice title=Quality Gate::Quality gate passed successfully"
+        else
+          echo "❌ Quality Gate FAILED - Secrets detected or scan error"
+          echo "::error title=Quality Gate::Quality gate failed - please review the detected issues"
+          exit 1
+        fi
