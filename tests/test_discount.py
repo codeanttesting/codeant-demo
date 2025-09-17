@@ -1,9 +1,6 @@
 from duplicate import calculate_discount
 
 def test_negative_amounts():
-    """Test behavior with negative amounts (currently returns negative final amount)"""
-    # Note: The function doesn't validate negative amounts
-    # This test documents current behavior
     result = calculate_discount(-100, "regular")
     assert result == -95.00  # -100 - (-100 * 0.05) = -95
     
