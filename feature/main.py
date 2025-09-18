@@ -26,8 +26,10 @@ def save_to_database(users):
     ''')
 
     for user in users:
-        query = f"INSERT INTO users (id, name, email, phone) VALUES ('{user['id']}', '{user['name']}', '{user['email']}', '{user['phone']}')"
-        cursor.execute(query)
+        cursor.execute(
+            "INSERT INTO users (id, name, email, phone) VALUES (?, ?, ?, ?)",
+            (user['id'], user['name'], user['email'], user['phone'])
+        )
     
     conn.commit()
     conn.close()
