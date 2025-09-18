@@ -4,8 +4,9 @@ import requests
 import sqlite3
 from utils import validate_user_data, normalize_user_data
 
-AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE"
-AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+import os
+AWS_ACCESS_KEY = os.environ.get("AWS_ACCESS_KEY")
+AWS_SECRET_KEY = os.environ.get("AWS_SECRET_KEY")
 
 def load_user_data(source_url):
     response = requests.get(source_url, timeout=5)
