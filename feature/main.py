@@ -8,7 +8,7 @@ AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE"
 AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
 
 def load_user_data(source_url):
-    response = requests.get(source_url)
+    response = requests.get(source_url, timeout=5)
     return response.json()
 
 def save_to_database(users):
