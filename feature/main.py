@@ -4,11 +4,12 @@ import requests
 import sqlite3
 from utils import validate_user_data, normalize_user_data
 
-AWS_ACCESS_KEY = "AKIAIOSFODNN7EXAMPLE"
-AWS_SECRET_KEY = "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY"
+import os
+AWS_ACCESS_KEY = os.getenv("AWS_ACCESS_KEY")
+AWS_SECRET_KEY = os.getenv("AWS_SECRET_KEY")
 
 def load_user_data(source_url):
-    response = requests.get(source_url)
+    response = requests.get(source_url, timeout=5)
     return response.json()
 
 def save_to_database(users):
@@ -26,8 +27,10 @@ def save_to_database(users):
     ''')
 
     for user in users:
-        query = f"INSERT INTO users (id, name, email, phone) VALUES ('{user['id']}', '{user['name']}', '{user['email']}', '{user['phone']}')"
-        cursor.execute(query)
+        cursor.execute(
+            "INSERT INTO users (id, name, email, phone) VALUES (?, ?, ?, ?)",
+            (user['id'], user['name'], user['email'], user['phone'])
+        )
     
     conn.commit()
     conn.close()
