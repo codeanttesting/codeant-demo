@@ -10,6 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run CodeAnt Scan
-        uses: CodeAnt-AI/codeant-ci-scan@v1
+        uses: CodeAnt-AI/codeant-ci-scan@v0.0.1
         with:
           access_token: ${{ secrets.ACCESS_TOKEN_GITHUB }}
