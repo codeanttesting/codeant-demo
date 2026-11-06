@@ -1,0 +1,1023 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "CodeAnt AI",
+          "rules": [
+            {
+              "id": "CVE-2024-21503",
+              "name": "CVE-2024-21503"
+            },
+            {
+              "id": "CVE-2024-35255",
+              "name": "CVE-2024-35255"
+            },
+            {
+              "id": "CVE-2024-47874",
+              "name": "CVE-2024-47874"
+            },
+            {
+              "id": "CVE-2025-0628",
+              "name": "CVE-2025-0628"
+            },
+            {
+              "id": "CVE-2025-54121",
+              "name": "CVE-2025-54121"
+            },
+            {
+              "id": "CVE-2025-6984",
+              "name": "CVE-2025-6984"
+            },
+            {
+              "id": "CVE-2026-114134",
+              "name": "CVE-2026-114134"
+            },
+            {
+              "id": "CVE-2026-12770",
+              "name": "CVE-2026-12770"
+            },
+            {
+              "id": "CVE-2026-12771",
+              "name": "CVE-2026-12771"
+            },
+            {
+              "id": "CVE-2026-12772",
+              "name": "CVE-2026-12772"
+            },
+            {
+              "id": "CVE-2026-12773",
+              "name": "CVE-2026-12773"
+            },
+            {
+              "id": "CVE-2026-12795",
+              "name": "CVE-2026-12795"
+            },
+            {
+              "id": "CVE-2026-12796",
+              "name": "CVE-2026-12796"
+            },
+            {
+              "id": "CVE-2026-12797",
+              "name": "CVE-2026-12797"
+            },
+            {
+              "id": "CVE-2026-12798",
+              "name": "CVE-2026-12798"
+            },
+            {
+              "id": "CVE-2026-12799",
+              "name": "CVE-2026-12799"
+            },
+            {
+              "id": "CVE-2026-26013",
+              "name": "CVE-2026-26013"
+            },
+            {
+              "id": "CVE-2026-34070",
+              "name": "CVE-2026-34070"
+            },
+            {
+              "id": "CVE-2026-35029",
+              "name": "CVE-2026-35029"
+            },
+            {
+              "id": "CVE-2026-35030",
+              "name": "CVE-2026-35030"
+            },
+            {
+              "id": "CVE-2026-37004",
+              "name": "CVE-2026-37004"
+            },
+            {
+              "id": "CVE-2026-41481",
+              "name": "CVE-2026-41481"
+            },
+            {
+              "id": "CVE-2026-47101",
+              "name": "CVE-2026-47101"
+            },
+            {
+              "id": "CVE-2026-47102",
+              "name": "CVE-2026-47102"
+            },
+            {
+              "id": "CVE-2026-48710",
+              "name": "CVE-2026-48710"
+            },
+            {
+              "id": "CVE-2026-48817",
+              "name": "CVE-2026-48817"
+            },
+            {
+              "id": "CVE-2026-48818",
+              "name": "CVE-2026-48818"
+            },
+            {
+              "id": "CVE-2026-49468",
+              "name": "CVE-2026-49468"
+            },
+            {
+              "id": "CVE-2026-54282",
+              "name": "CVE-2026-54282"
+            },
+            {
+              "id": "CVE-2026-54283",
+              "name": "CVE-2026-54283"
+            },
+            {
+              "id": "CVE-2026-59819",
+              "name": "CVE-2026-59819"
+            },
+            {
+              "id": "CVE-2026-59820",
+              "name": "CVE-2026-59820"
+            },
+            {
+              "id": "CVE-2026-59821",
+              "name": "CVE-2026-59821"
+            },
+            {
+              "id": "CVE-2026-59822",
+              "name": "CVE-2026-59822"
+            },
+            {
+              "id": "CVE-2026-59823",
+              "name": "CVE-2026-59823"
+            },
+            {
+              "id": "CVE-2026-84377",
+              "name": "CVE-2026-84377"
+            },
+            {
+              "id": "debug-endpoints-enabled",
+              "name": "debug-endpoints-enabled"
+            },
+            {
+              "id": "eval-detected",
+              "name": "eval-detected"
+            },
+            {
+              "id": "formatted-sql-query",
+              "name": "formatted-sql-query"
+            },
+            {
+              "id": "generic-password",
+              "name": "generic-password"
+            },
+            {
+              "id": "path-traversal-open",
+              "name": "path-traversal-open"
+            },
+            {
+              "id": "python-subprocess-shell-true-format",
+              "name": "python-subprocess-shell-true-format"
+            },
+            {
+              "id": "python-weak-hash-md5",
+              "name": "python-weak-hash-md5"
+            },
+            {
+              "id": "sca",
+              "name": "sca"
+            },
+            {
+              "id": "sql-injection-db-cursor-execute",
+              "name": "sql-injection-db-cursor-execute"
+            },
+            {
+              "id": "user-eval",
+              "name": "user-eval"
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "formatted-sql-query",
+          "level": "error",
+          "message": {
+            "text": "Detected possible formatted SQL query. Use parameterized queries instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/feature/main2.py"
+                },
+                "region": {
+                  "startLine": 30
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "sql-injection-db-cursor-execute",
+          "level": "error",
+          "message": {
+            "text": "User-controlled data from a request is passed to 'execute()'. This could lead to a SQL injection and therefore protected information could be leaked. Instead, use django's QuerySets, which are built with query parameterization and therefore not vulnerable to sql injection. For example, you could use `Entry.objects.filter(date=2006)`."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 24
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "formatted-sql-query",
+          "level": "error",
+          "message": {
+            "text": "Detected possible formatted SQL query. Use parameterized queries instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 28
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "python-subprocess-shell-true-format",
+          "level": "error",
+          "message": {
+            "text": "Subprocess call with `shell=True` and a dynamically constructed command string (f-string or format). This is vulnerable to shell injection. Use a list of arguments without `shell=True`, or use `shlex.quote()` to sanitize inputs."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 35
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "python-weak-hash-md5",
+          "level": "error",
+          "message": {
+            "text": "Use of MD5 hash algorithm detected. MD5 is cryptographically broken and should not be used for security purposes such as password hashing or integrity verification. Use a stronger algorithm like SHA-256 or bcrypt."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 41
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "path-traversal-open",
+          "level": "error",
+          "message": {
+            "text": "Found request data in a call to 'open'. Ensure the request data is validated or sanitized, otherwise it could result in path traversal attacks."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 49
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "user-eval",
+          "level": "error",
+          "message": {
+            "text": "Found user data in a call to 'eval'. This is extremely dangerous because it can enable an attacker to execute arbitrary remote code on the system. Instead, refactor your code to not use 'eval' and instead use a safe library for the specific functionality you need."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 55
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "eval-detected",
+          "level": "error",
+          "message": {
+            "text": "Detected the use of eval(). eval() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 57
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "debug-endpoints-enabled",
+          "level": "warning",
+          "message": {
+            "text": "Debug mode is enabled in a web application. This can expose sensitive information such as stack traces, environment variables, and internal application state to attackers. Disable debug features in production environments."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
+                },
+                "region": {
+                  "startLine": 62
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2024-35255",
+          "level": "warning",
+          "message": {
+            "text": "Azure Identity Libraries and Microsoft Authentication Library Elevation of Privilege Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "azure-identity"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2025-6984",
+          "level": "error",
+          "message": {
+            "text": "Langchain Community Vulnerable to XML External Entity (XXE) Attacks"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "langchain-community"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-84377",
+          "level": "warning",
+          "message": {
+            "text": "LiteLLM: Authenticated SSRF and provider-credential exfiltration via unvalidated request-body routing parameters"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-59823",
+          "level": "warning",
+          "message": {
+            "text": "LiteLLM Proxy has server-side request forgery via the `user_config` request parameter"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12799",
+          "level": "note",
+          "message": {
+            "text": "BerriAI litellm: UI User Enumeration leads to System-Wide Information Disclosure"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12798",
+          "level": "note",
+          "message": {
+            "text": "BerriAI litellm has SSRF via Unvalidated spec_path URL in MCP OpenAPI Spec Loader"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12797",
+          "level": "note",
+          "message": {
+            "text": "BerriAI litellm has Security Feature Bypass in BannedKeywords and AzureContentSafety Guardrails via call_type Mismatch on Async Endpoints"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12796",
+          "level": "note",
+          "message": {
+            "text": "BerriAI litellm: SSO Login Does Not Invalidate Previous UI Session Tokens"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12795",
+          "level": "warning",
+          "message": {
+            "text": "LiteLLM: SSO Debug Flow Has Improper Authentication"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12770",
+          "level": "note",
+          "message": {
+            "text": "LiteLLM: Admin Key Handler Has Improper Authorization"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12773",
+          "level": "warning",
+          "message": {
+            "text": "LiteLLM: MCP Proxy Has Improper Authentication"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12771",
+          "level": "note",
+          "message": {
+            "text": "LiteLLM: M2M JWT Handler Has Improper Authorization"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-12772",
+          "level": "note",
+          "message": {
+            "text": "LiteLLM: PROXY_ADMIN database API Key Generator Has Insufficient Session Expiration"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-37004",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM vulnerable to server-side template injection in the /prompts/test endpoint"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-59821",
+          "level": "note",
+          "message": {
+            "text": "LiteLLM: Custom Code Guardrails production endpoints bypass code safety checks"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-59822",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM: MCP Authentication Bypass via OAuth2 Passthrough Fallback"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-59819",
+          "level": "note",
+          "message": {
+            "text": "LiteLLM: Local file read via request-supplied OIDC file references"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-59820",
+          "level": "warning",
+          "message": {
+            "text": "LiteLLM: Arbitrary file write via path traversal in Skills archive extraction"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-47102",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM allows a user to modify their own user_role via the /user/update endpoint"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-47101",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM allows an authenticated internal_user to create API keys with access to routes that their role does not permit"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-49468",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM: Authentication Bypass via Host Header Injection"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-35030",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM: Authentication bypass via OIDC userinfo cache key collision"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-35029",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM: Privilege escalation via unrestricted proxy configuration endpoint"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2025-0628",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM Has an Improper Authorization Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "sca",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM: internal_user_viewer arbitrary local file read via `vertex_ai_credentials`"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "sca",
+          "level": "error",
+          "message": {
+            "text": "LiteLLM: Password hash exposure and pass-the-hash authentication bypass"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "litellm"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-54283",
+          "level": "error",
+          "message": {
+            "text": "Starlette: request.form() limits silently ignored for application/x-www-form-urlencoded enable DoS"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-54282",
+          "level": "note",
+          "message": {
+            "text": "Starlette: Unvalidated request path concatenated into authority poisons request.url.hostname"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-48818",
+          "level": "error",
+          "message": {
+            "text": "Starlette: SSRF and NTLM credential theft via UNC paths in StaticFiles on Windows"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-48817",
+          "level": "warning",
+          "message": {
+            "text": "Starlette: Arbitrary HTTP method dispatched to `HTTPEndpoint` attributes via `getattr`"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-48710",
+          "level": "warning",
+          "message": {
+            "text": "Starlette has missing Host header validation that poisons request.url.path, bypassing path-based security checks"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2025-54121",
+          "level": "warning",
+          "message": {
+            "text": "Starlette has possible denial-of-service vector when parsing large files in multipart forms"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2024-47874",
+          "level": "error",
+          "message": {
+            "text": "Starlette Denial of service (DoS) via multipart/form-data"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "starlette"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-114134",
+          "level": "error",
+          "message": {
+            "text": "Black: GitHub Action installs unvalidated required-version from pyproject.toml"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "black"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2024-21503",
+          "level": "warning",
+          "message": {
+            "text": "Black vulnerable to Regular Expression Denial of Service (ReDoS)"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "black"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-41481",
+          "level": "warning",
+          "message": {
+            "text": "LangChain Text Splitters: HTMLHeaderTextSplitter.split_text_from_url SSRF Redirect Bypass"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "langchain-text-splitters"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-34070",
+          "level": "error",
+          "message": {
+            "text": "LangChain Core has Path Traversal vulnerabilites in legacy `load_prompt` functions"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "langchain-core"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "CVE-2026-26013",
+          "level": "note",
+          "message": {
+            "text": "LangChain affected by SSRF via image_url token counting in ChatOpenAI.get_num_tokens_from_messages"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "langchain-core"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "generic-password",
+          "level": "error",
+          "message": {
+            "text": "generic-password"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/IaC.yaml"
+                },
+                "region": {
+                  "startLine": 47
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "invocations": [
+        {
+          "executionSuccessful": true
+        }
+      ],
+      "properties": {
+        "total_findings": 48,
+        "findings_by_severity": {
+          "HIGH": 19,
+          "CRITICAL": 6,
+          "MEDIUM": 12,
+          "LOW": 11
+        },
+        "findings_by_engine": {
+          "sast": 9,
+          "sca": 38,
+          "secrets": 1
+        },
+        "ratings": {
+          "sast_rating_full_code": "C",
+          "sca_rating_full_code": "D"
+        },
+        "quality_gate_status": "FAILED"
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+Run: https://github.com/codeanttesting/codeant-demo/actions/runs/42309878084
+Commit: b5cedf7a812cb395e914381f92dc64f94fee39bd
+Selected output (credential/setup lines omitted):
+
+2026-11-06T23:08:59.1663217Z   QUALITY_GATE: false
+2026-11-06T23:10:40.0905720Z 📊 Findings: 48
+2026-11-06T23:10:40.0906160Z 🎯 Quality Gate: FAILED
+2026-11-06T23:10:40.0907105Z   CodeAnt - SAST         sast_rating_full_code              C      FAILED  sast_rating_full_code is C (same or worse than threshold C)
+2026-11-06T23:10:40.0908346Z   CodeAnt - SCA          sca_rating_full_code               D      FAILED  sca_rating_full_code is D (same or worse than threshold C)

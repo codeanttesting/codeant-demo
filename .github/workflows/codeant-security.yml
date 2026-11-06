@@ -1,0 +1,45 @@
+name: CodeAnt security pipeline
+
+on:
+  push:
+    branches: [main, examples/security-pipeline]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeant-security-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: false
+
+jobs:
+  security:
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Scan repository
+        uses: CodeAnt-AI/codeant-ci-scan-action@v0.0.6
+        with:
+          access_token: ${{ secrets.CODEANT_TOKEN || secrets.ACCESS_TOKEN_GITHUB }}
+          scanners: sast,sca,secrets
+          scan_timeout: '1200'
+          quality_gate: 'true'
+      - name: Save reports
+        if: ${{ always() }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeant-results
+          if-no-files-found: error
+          path: |
+            results.json
+            codeant.sarif
+            codeant-qg.xml
+
+  deploy:
+    needs: security
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'Replace this step with your deployment command'
