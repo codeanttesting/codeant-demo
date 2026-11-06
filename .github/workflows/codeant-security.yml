@@ -21,7 +21,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Scan repository
-        uses: CodeAnt-AI/codeant-ci-scan-action@d4e7f37809f110ab9216766e53fbad0061393e27
+        uses: CodeAnt-AI/codeant-ci-scan-action@v0.0.6
         with:
           access_token: ${{ secrets.CODEANT_TOKEN || secrets.ACCESS_TOKEN_GITHUB }}
           scanners: sast,sca,secrets

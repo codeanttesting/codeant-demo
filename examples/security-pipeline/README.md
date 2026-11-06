@@ -12,8 +12,8 @@ Copy [the workflow](../../.github/workflows/codeant-security.yml), then:
 5. Replace the workflow's branch triggers with your target branch and run it.
 
 Set `quality_gate: 'true'` to fail the action on a failed native verdict or results
-timeout. Set it to `'false'` for report-only runs. The pinned action revision
-supports this input; `v0.0.5` does not. See [action PR #5](https://github.com/CodeAnt-AI/codeant-ci-scan-action/pull/5).
+timeout. Set it to `'false'` for report-only runs. The workflow uses
+[v0.0.6](https://github.com/CodeAnt-AI/codeant-ci-scan-action/releases/tag/v0.0.6).
 
 Configure thresholds before enforcing: without conditions, CodeAnt can return
 PASSED. Native full-code gates cover SAST/SCA/IaC ratings and duplicate code.
@@ -29,7 +29,7 @@ because they do not receive repository secrets.
 
 ## Verified action runs
 
-Both runs returned 48 findings and a native FAILED verdict (SAST C, SCA D).
+These pre-release runs returned 48 findings and a native FAILED verdict (SAST C, SCA D).
 
 | Input | Run | Result |
 | --- | --- | --- |
