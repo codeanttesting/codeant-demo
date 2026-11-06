@@ -205,7 +205,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/feature/main2.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/feature/main2.py"
                 },
                 "region": {
                   "startLine": 30
@@ -224,7 +224,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 24
@@ -243,7 +243,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 28
@@ -262,7 +262,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 35
@@ -281,7 +281,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 41
@@ -300,7 +300,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 49
@@ -319,7 +319,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 55
@@ -338,7 +338,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 57
@@ -357,7 +357,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/security_vulns.py"
                 },
                 "region": {
                   "startLine": 62
@@ -927,22 +927,6 @@
           ]
         },
         {
-          "ruleId": "CVE-2026-41481",
-          "level": "warning",
-          "message": {
-            "text": "LangChain Text Splitters: HTMLHeaderTextSplitter.split_text_from_url SSRF Redirect Bypass"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "langchain-text-splitters"
-                }
-              }
-            }
-          ]
-        },
-        {
           "ruleId": "CVE-2026-34070",
           "level": "error",
           "message": {
@@ -975,6 +959,22 @@
           ]
         },
         {
+          "ruleId": "CVE-2026-41481",
+          "level": "warning",
+          "message": {
+            "text": "LangChain Text Splitters: HTMLHeaderTextSplitter.split_text_from_url SSRF Redirect Bypass"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "langchain-text-splitters"
+                }
+              }
+            }
+          ]
+        },
+        {
           "ruleId": "generic-password",
           "level": "error",
           "message": {
@@ -984,7 +984,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/codeanttesting/codeant-demo/2cd6121a53fccf0a4871b2744ca14877379e68c9/IaC.yaml"
+                  "uri": "/mnt/lambda/codeanttesting/codeant-demo/55abb4578c64c89f7a4b1e7efea665e5c78ec461/IaC.yaml"
                 },
                 "region": {
                   "startLine": 47

@@ -1,9 +1,11 @@
-Run: https://github.com/codeanttesting/codeant-demo/actions/runs/42308406392
-Selected output (setup and credential lines omitted):
+Run: https://github.com/codeanttesting/codeant-demo/actions/runs/42310207026
+Commit: 55abb4578c64c89f7a4b1e7efea665e5c78ec461
+Selected output (credential/setup lines omitted):
 
-2026-11-06T22:57:55.1339842Z 📊 Findings: 48
-2026-11-06T22:57:55.1340079Z 🎯 Quality Gate: FAILED
-2026-11-06T22:57:55.1340536Z   CodeAnt - SAST         sast_rating_full_code              C      FAILED  sast_rating_full_code is C (same or worse than threshold C)
-2026-11-06T22:57:55.1341148Z   CodeAnt - SCA          sca_rating_full_code               D      FAILED  sca_rating_full_code is D (same or worse than threshold C)
-2026-11-06T22:57:56.3709030Z Security gate failed
-2026-11-06T22:57:56.3741179Z ##[error]Process completed with exit code 1.
+2026-11-06T23:11:51.0788127Z   QUALITY_GATE: true
+2026-11-06T23:12:27.9309233Z 📊 Findings: 48
+2026-11-06T23:12:27.9309569Z 🎯 Quality Gate: FAILED
+2026-11-06T23:12:27.9310244Z   CodeAnt - SAST         sast_rating_full_code              C      FAILED  sast_rating_full_code is C (same or worse than threshold C)
+2026-11-06T23:12:27.9311251Z   CodeAnt - SCA          sca_rating_full_code               D      FAILED  sca_rating_full_code is D (same or worse than threshold C)
+2026-11-06T23:12:27.9312186Z ❌ Quality gate FAILED
+2026-11-06T23:12:27.9400091Z ##[error]Process completed with exit code 1.

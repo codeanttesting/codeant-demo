@@ -1,7 +1,6 @@
 # CI security pipeline
 
-Copy [the workflow](../../.github/workflows/codeant-security.yml). No helper script,
-policy file, or extra package is required.
+Copy [the workflow](../../.github/workflows/codeant-security.yml), then:
 
 1. Enable secrets, SAST, and SCA analysis in CodeAnt.
 2. Open **Settings → Code Analysis → Quality Gates**, select your repository,
@@ -12,31 +11,30 @@ policy file, or extra package is required.
    `CODEANT_TOKEN`. This test repository also accepts its existing legacy secret.
 5. Replace the workflow's branch triggers with your target branch and run it.
 
-`ENFORCE_SECURITY: 'false'` warns on findings. Set it to `'true'` to fail the job
-and skip deployment. Missing results or native gate conditions fail in both modes.
+Set `quality_gate: 'true'` to fail the action on a failed native verdict or results
+timeout. Set it to `'false'` for report-only runs. The pinned action revision
+supports this input; `v0.0.5` does not. See [action PR #5](https://github.com/CodeAnt-AI/codeant-ci-scan-action/pull/5).
 
-Thresholds are evaluated by CodeAnt. The inline gate step also checks for zero
-reported secrets, because the native full-code response has no secrets gate metric.
-The published action collects results but does not expose a `quality_gate` input.
+Configure thresholds before enforcing: without conditions, CodeAnt can return
+PASSED. Native full-code gates cover SAST/SCA/IaC ratings and duplicate code.
+Secrets appear in reports but have no native full-code gate metric.
 
 Download **codeant-results** from the run's **Artifacts** section. It contains
 native `results.json`, `codeant.sarif`, and `codeant-qg.xml`. The action does not
-produce CSV or PDF. Do not upload credentials or environment dumps as artifacts.
+generate CSV/PDF. Reports upload even when the scan step fails.
 
-The deployment step is a placeholder. Replace it with your deployment command and
-keep `needs: security`. To block merges, require the check in branch protection.
-The workflow skips fork PRs, which do not receive repository secrets.
+Replace the deployment placeholder with your command and keep `needs: security`.
+Require the check in branch protection to block merges. Fork PRs are skipped
+because they do not receive repository secrets.
 
-## Real native-gate runs
+## Verified action runs
 
-Both runs evaluated enabled full-code conditions: SAST was C and SCA was D, so
-CodeAnt returned FAILED. Each returned 48 findings.
+Both runs returned 48 findings and a native FAILED verdict (SAST C, SCA D).
 
-| Mode | Run | Result |
+| Input | Run | Result |
 | --- | --- | --- |
-| Warning | [42308035025](https://github.com/codeanttesting/codeant-demo/actions/runs/42308035025) | Native gate failed; workflow warned and deployment placeholder ran. |
-| Enforcement | [42308406392](https://github.com/codeanttesting/codeant-demo/actions/runs/42308406392) | Native gate failed; security job failed and deployment was skipped. |
+| `quality_gate: 'false'` | [42309878084](https://github.com/codeanttesting/codeant-demo/actions/runs/42309878084) | Scan succeeded; deployment placeholder ran. |
+| `quality_gate: 'true'` | [42310207026](https://github.com/codeanttesting/codeant-demo/actions/runs/42310207026) | Scan step failed; deployment was skipped; reports uploaded. |
 
-Original native reports and selected runner output are saved in
-[`evidence/warn`](evidence/warn) and [`evidence/enforce`](evidence/enforce).
-They are historical outputs for these runs; future scans may differ.
+Native reports and selected logs are preserved in [`evidence/report-only`](evidence/report-only)
+and [`evidence/enforce`](evidence/enforce). Future finding counts may differ.

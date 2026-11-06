@@ -196,6 +196,25 @@
       },
       "results": [
         {
+          "ruleId": "formatted-sql-query",
+          "level": "error",
+          "message": {
+            "text": "Detected possible formatted SQL query. Use parameterized queries instead."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/feature/main2.py"
+                },
+                "region": {
+                  "startLine": 30
+                }
+              }
+            }
+          ]
+        },
+        {
           "ruleId": "sql-injection-db-cursor-execute",
           "level": "error",
           "message": {
@@ -205,10 +224,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 23
+                  "startLine": 24
                 }
               }
             }
@@ -224,10 +243,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 27
+                  "startLine": 28
                 }
               }
             }
@@ -243,10 +262,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 34
+                  "startLine": 35
                 }
               }
             }
@@ -262,10 +281,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 40
+                  "startLine": 41
                 }
               }
             }
@@ -281,10 +300,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 48
+                  "startLine": 49
                 }
               }
             }
@@ -300,10 +319,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 54
+                  "startLine": 55
                 }
               }
             }
@@ -319,10 +338,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 56
+                  "startLine": 57
                 }
               }
             }
@@ -338,29 +357,10 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/security_vulns.py"
+                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/security_vulns.py"
                 },
                 "region": {
-                  "startLine": 61
-                }
-              }
-            }
-          ]
-        },
-        {
-          "ruleId": "formatted-sql-query",
-          "level": "error",
-          "message": {
-            "text": "Detected possible formatted SQL query. Use parameterized queries instead."
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "/mnt/lambda/github/github.com/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/feature/main2.py"
-                },
-                "region": {
-                  "startLine": 30
+                  "startLine": 62
                 }
               }
             }
@@ -984,7 +984,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "/mnt/lambda/codeanttesting/codeant-demo/ed6a2f3e27ef742f7972b0072a3195543e3f93aa/IaC.yaml"
+                  "uri": "/mnt/lambda/codeanttesting/codeant-demo/b5cedf7a812cb395e914381f92dc64f94fee39bd/IaC.yaml"
                 },
                 "region": {
                   "startLine": 47
