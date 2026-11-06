@@ -1,6 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<testsuite name="CodeAnt Quality Gate" tests="2" failures="0"><properties><property name="quality_gate_status" value="PASSED" /><property name="total_findings" value="48" /><property name="sast_rating_full_code" value="C" /><property name="sca_rating_full_code" value="D" /><property name="findings.severity.HIGH" value="19" /><property name="findings.severity.CRITICAL" value="6" /><property name="findings.severity.MEDIUM" value="12" /><property name="findings.severity.LOW" value="11" /><property name="findings.engine.sast" value="9" /><property name="findings.engine.sca" value="38" /><property name="findings.engine.secrets" value="1" /></properties><testcase name="CodeAnt - SAST:sast_rating_full_code" /><testcase name="CodeAnt - SCA:sca_rating_full_code" /><system-out>Quality Gate: PASSED
-Total findings: 48
-By severity: HIGH=19, CRITICAL=6, MEDIUM=12, LOW=11
-By engine: sast=9, sca=38, secrets=1
-Ratings: sast_rating_full_code=C, sca_rating_full_code=D</system-out></testsuite>

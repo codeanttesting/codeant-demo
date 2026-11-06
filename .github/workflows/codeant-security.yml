@@ -1,89 +1,66 @@
-name: Reusable CodeAnt security pipeline
+name: CodeAnt security pipeline
 
 on:
-  workflow_call:
-    inputs:
-      mode:
-        description: warn records policy failures; enforce blocks the caller
-        type: string
-        default: enforce
-    secrets:
-      CODEANT_TOKEN:
-        required: true
+  push:
+    branches: [main, examples/security-pipeline]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
 
 permissions:
   contents: read
 
+concurrency:
+  group: codeant-security-${{ github.event.pull_request.head.sha || github.sha }}
+  cancel-in-progress: false
+
+env:
+  ENFORCE_SECURITY: 'false'
+
 jobs:
-  scan:
-    name: Full repository scan
+  security:
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - name: Check pipeline configuration
-        env:
-          CODEANT_TOKEN: ${{ secrets.CODEANT_TOKEN }}
-          MODE: ${{ inputs.mode }}
-        run: |
-          test -n "$CODEANT_TOKEN" || { echo '::error::CODEANT_TOKEN is missing'; exit 1; }
-          case "$MODE" in warn|enforce) ;; *) echo '::error::mode must be warn or enforce'; exit 1 ;; esac
-      - name: Run full repository scan
+      - name: Scan repository
         uses: CodeAnt-AI/codeant-ci-scan-action@v0.0.5
         with:
-          access_token: ${{ secrets.CODEANT_TOKEN }}
+          access_token: ${{ secrets.CODEANT_TOKEN || secrets.ACCESS_TOKEN_GITHUB }}
           scanners: sast,sca,secrets
           scan_timeout: '1200'
-      - name: Install PDF report dependency
-        run: python3 -m pip install reportlab==4.5.1
-      - name: Export CSV and PDF; require completed results
-        env:
-          SCAN_COMMIT: ${{ github.event.pull_request.head.sha || github.sha }}
-        run: python3 examples/security-pipeline/report.py export
-      - name: Preserve reports even when a later gate fails
+      - name: Save reports
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
         with:
-          name: codeant-security-${{ github.run_id }}-${{ github.run_attempt }}
-          retention-days: 14
+          name: codeant-results
           if-no-files-found: error
           path: |
             results.json
             codeant.sarif
             codeant-qg.xml
-            codeant-findings.csv
-            codeant-summary.pdf
-            codeant-run.json
+      - name: Check security gates
+        run: |
+          python3 - <<'PY'
+          import json, os
+          from pathlib import Path
+          result = json.loads(Path('results.json').read_text())
+          if result.get('status') != 'COMPLETED':
+              raise SystemExit('Scan did not complete')
+          enabled = {c['metric'] for c in result.get('evaluated_conditions', [])
+                     if c.get('quality_gate_enabled')}
+          required = {'sast_rating_full_code', 'sca_rating_full_code'}
+          if not required.issubset(enabled):
+              raise SystemExit('Configure full-code SAST and SCA gates in CodeAnt')
+          secrets = sum(f['engine'] == 'secrets' for f in result['findings'])
+          if result.get('quality_gate_status') != 'PASSED' or secrets:
+              if os.environ['ENFORCE_SECURITY'] == 'true':
+                  raise SystemExit('Security gate failed')
+              print('::warning::Security gate failed; warning mode is enabled')
+          PY
 
-  gates:
-    name: ${{ matrix.scanner }} policy
-    needs: scan
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        scanner: [secrets, sast, sca]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.pull_request.head.sha || github.sha }}
-          persist-credentials: false
-      - uses: actions/download-artifact@v4
-        with:
-          name: codeant-security-${{ github.run_id }}-${{ github.run_attempt }}
-      - name: Evaluate example policy
-        env:
-          SCANNER: ${{ matrix.scanner }}
-          MODE: ${{ inputs.mode }}
-        run: python3 examples/security-pipeline/report.py gate --scanner "$SCANNER" --mode "$MODE"
-
-  staging:
-    name: Staging readiness
-    needs: [scan, gates]
+  deploy:
+    needs: security
     runs-on: ubuntu-latest
     steps:
-      - name: Demonstrate the deployment dependency
-        run: echo 'Security jobs passed. Replace this step with your staging deployment.'
+      - run: echo 'Replace this step with your deployment command'
