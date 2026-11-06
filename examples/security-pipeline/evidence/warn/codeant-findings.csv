@@ -1,0 +1,49 @@
+engine,severity,file,line,rule,message
+sast,HIGH,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/feature/main2.py,30,formatted-sql-query,Detected possible formatted SQL query. Use parameterized queries instead.
+sast,HIGH,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,23,sql-injection-db-cursor-execute,"User-controlled data from a request is passed to 'execute()'. This could lead to a SQL injection and therefore protected information could be leaked. Instead, use django's QuerySets, which are built with query parameterization and therefore not vulnerable to sql injection. For example, you could use `Entry.objects.filter(date=2006)`."
+sast,HIGH,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,27,formatted-sql-query,Detected possible formatted SQL query. Use parameterized queries instead.
+sast,CRITICAL,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,34,python-subprocess-shell-true-format,"Subprocess call with `shell=True` and a dynamically constructed command string (f-string or format). This is vulnerable to shell injection. Use a list of arguments without `shell=True`, or use `shlex.quote()` to sanitize inputs."
+sast,CRITICAL,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,40,python-weak-hash-md5,Use of MD5 hash algorithm detected. MD5 is cryptographically broken and should not be used for security purposes such as password hashing or integrity verification. Use a stronger algorithm like SHA-256 or bcrypt.
+sast,HIGH,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,48,path-traversal-open,"Found request data in a call to 'open'. Ensure the request data is validated or sanitized, otherwise it could result in path traversal attacks."
+sast,HIGH,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,54,user-eval,"Found user data in a call to 'eval'. This is extremely dangerous because it can enable an attacker to execute arbitrary remote code on the system. Instead, refactor your code to not use 'eval' and instead use a safe library for the specific functionality you need."
+sast,CRITICAL,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,56,eval-detected,"Detected the use of eval(). eval() can be dangerous if used to evaluate dynamic content. If this content can be input from outside the program, this may be a code injection vulnerability. Ensure evaluated content is not definable by external sources."
+sast,MEDIUM,/mnt/lambda/github/github.com/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/security_vulns.py,61,debug-endpoints-enabled,"Debug mode is enabled in a web application. This can expose sensitive information such as stack traces, environment variables, and internal application state to attackers. Disable debug features in production environments."
+sca,MEDIUM,azure-identity,,CVE-2024-35255,Azure Identity Libraries and Microsoft Authentication Library Elevation of Privilege Vulnerability
+sca,HIGH,langchain-community,,CVE-2025-6984,Langchain Community Vulnerable to XML External Entity (XXE) Attacks
+sca,MEDIUM,litellm,,CVE-2026-84377,LiteLLM: Authenticated SSRF and provider-credential exfiltration via unvalidated request-body routing parameters
+sca,MEDIUM,litellm,,CVE-2026-59823,LiteLLM Proxy has server-side request forgery via the `user_config` request parameter
+sca,LOW,litellm,,CVE-2026-12799,BerriAI litellm: UI User Enumeration leads to System-Wide Information Disclosure
+sca,LOW,litellm,,CVE-2026-12798,BerriAI litellm has SSRF via Unvalidated spec_path URL in MCP OpenAPI Spec Loader
+sca,LOW,litellm,,CVE-2026-12797,BerriAI litellm has Security Feature Bypass in BannedKeywords and AzureContentSafety Guardrails via call_type Mismatch on Async Endpoints
+sca,LOW,litellm,,CVE-2026-12796,BerriAI litellm: SSO Login Does Not Invalidate Previous UI Session Tokens
+sca,MEDIUM,litellm,,CVE-2026-12795,LiteLLM: SSO Debug Flow Has Improper Authentication
+sca,LOW,litellm,,CVE-2026-12770,LiteLLM: Admin Key Handler Has Improper Authorization
+sca,MEDIUM,litellm,,CVE-2026-12773,LiteLLM: MCP Proxy Has Improper Authentication
+sca,LOW,litellm,,CVE-2026-12771,LiteLLM: M2M JWT Handler Has Improper Authorization
+sca,LOW,litellm,,CVE-2026-12772,LiteLLM: PROXY_ADMIN database API Key Generator Has Insufficient Session Expiration
+sca,CRITICAL,litellm,,CVE-2026-37004,LiteLLM vulnerable to server-side template injection in the /prompts/test endpoint
+sca,LOW,litellm,,CVE-2026-59821,LiteLLM: Custom Code Guardrails production endpoints bypass code safety checks
+sca,HIGH,litellm,,CVE-2026-59822,LiteLLM: MCP Authentication Bypass via OAuth2 Passthrough Fallback
+sca,LOW,litellm,,CVE-2026-59819,LiteLLM: Local file read via request-supplied OIDC file references
+sca,MEDIUM,litellm,,CVE-2026-59820,LiteLLM: Arbitrary file write via path traversal in Skills archive extraction
+sca,HIGH,litellm,,CVE-2026-47102,LiteLLM allows a user to modify their own user_role via the /user/update endpoint
+sca,HIGH,litellm,,CVE-2026-47101,LiteLLM allows an authenticated internal_user to create API keys with access to routes that their role does not permit
+sca,CRITICAL,litellm,,CVE-2026-49468,LiteLLM: Authentication Bypass via Host Header Injection
+sca,CRITICAL,litellm,,CVE-2026-35030,LiteLLM: Authentication bypass via OIDC userinfo cache key collision
+sca,HIGH,litellm,,CVE-2026-35029,LiteLLM: Privilege escalation via unrestricted proxy configuration endpoint
+sca,HIGH,litellm,,CVE-2025-0628,LiteLLM Has an Improper Authorization Vulnerability
+sca,HIGH,litellm,,,LiteLLM: internal_user_viewer arbitrary local file read via `vertex_ai_credentials`
+sca,HIGH,litellm,,,LiteLLM: Password hash exposure and pass-the-hash authentication bypass
+sca,HIGH,starlette,,CVE-2026-54283,Starlette: request.form() limits silently ignored for application/x-www-form-urlencoded enable DoS
+sca,LOW,starlette,,CVE-2026-54282,Starlette: Unvalidated request path concatenated into authority poisons request.url.hostname
+sca,HIGH,starlette,,CVE-2026-48818,Starlette: SSRF and NTLM credential theft via UNC paths in StaticFiles on Windows
+sca,MEDIUM,starlette,,CVE-2026-48817,Starlette: Arbitrary HTTP method dispatched to `HTTPEndpoint` attributes via `getattr`
+sca,MEDIUM,starlette,,CVE-2026-48710,"Starlette has missing Host header validation that poisons request.url.path, bypassing path-based security checks"
+sca,MEDIUM,starlette,,CVE-2025-54121,Starlette has possible denial-of-service vector when parsing large files in multipart forms
+sca,HIGH,starlette,,CVE-2024-47874,Starlette Denial of service (DoS) via multipart/form-data
+sca,HIGH,black,,CVE-2026-114134,Black: GitHub Action installs unvalidated required-version from pyproject.toml
+sca,MEDIUM,black,,CVE-2024-21503,Black vulnerable to Regular Expression Denial of Service (ReDoS)
+sca,MEDIUM,langchain-text-splitters,,CVE-2026-41481,LangChain Text Splitters: HTMLHeaderTextSplitter.split_text_from_url SSRF Redirect Bypass
+sca,HIGH,langchain-core,,CVE-2026-34070,LangChain Core has Path Traversal vulnerabilites in legacy `load_prompt` functions
+sca,LOW,langchain-core,,CVE-2026-26013,LangChain affected by SSRF via image_url token counting in ChatOpenAI.get_num_tokens_from_messages
+secrets,HIGH,/mnt/lambda/codeanttesting/codeant-demo/a342d10cc4ddf2a446e5f09d0d89d3913182effe/IaC.yaml,47,generic-password,generic-password

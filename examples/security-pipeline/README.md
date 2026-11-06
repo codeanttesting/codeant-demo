@@ -79,3 +79,23 @@ to demonstrate that capability.
 
 ReportLab 4.5.1 is installed only to produce the example PDF. Gate evaluation uses
 Python's standard library. No third-party report dependency is needed for gates.
+
+## Real run evidence
+
+Both runs scanned the public repository and returned 48 findings: 1 secret,
+9 SAST findings (8 HIGH/CRITICAL), and 38 SCA findings (16 HIGH/CRITICAL).
+
+| Mode | Run | Outcome |
+| --- | --- | --- |
+| Warning | [42304719043](https://github.com/codeanttesting/codeant-demo/actions/runs/42304719043) | All policy jobs recorded warnings; staging readiness ran. |
+| Enforcement | [42305066053](https://github.com/codeanttesting/codeant-demo/actions/runs/42305066053) | All three policy jobs failed; staging readiness was skipped. |
+
+The original report files and selected runner output are preserved under
+[`evidence/warn`](evidence/warn) and [`evidence/enforce`](evidence/enforce), so the
+examples remain available after Actions artifacts expire. These are historical
+outputs for the commits identified in `codeant-run.json`, not a claim about every
+future scan. Credential/setup log lines are omitted from the saved excerpts.
+
+In these runs, the native verdict was PASSED with no native gate conditions
+enabled. The explicit example policy still blocked enforcement, which illustrates
+why a native verdict must be interpreted alongside its evaluated conditions.
