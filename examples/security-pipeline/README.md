@@ -26,3 +26,17 @@ produce CSV or PDF. Do not upload credentials or environment dumps as artifacts.
 The deployment step is a placeholder. Replace it with your deployment command and
 keep `needs: security`. To block merges, require the check in branch protection.
 The workflow skips fork PRs, which do not receive repository secrets.
+
+## Real native-gate runs
+
+Both runs evaluated enabled full-code conditions: SAST was C and SCA was D, so
+CodeAnt returned FAILED. Each returned 48 findings.
+
+| Mode | Run | Result |
+| --- | --- | --- |
+| Warning | [42308035025](https://github.com/codeanttesting/codeant-demo/actions/runs/42308035025) | Native gate failed; workflow warned and deployment placeholder ran. |
+| Enforcement | [42308406392](https://github.com/codeanttesting/codeant-demo/actions/runs/42308406392) | Native gate failed; security job failed and deployment was skipped. |
+
+Original native reports and selected runner output are saved in
+[`evidence/warn`](evidence/warn) and [`evidence/enforce`](evidence/enforce).
+They are historical outputs for these runs; future scans may differ.

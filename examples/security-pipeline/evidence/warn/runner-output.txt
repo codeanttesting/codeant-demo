@@ -1,0 +1,8 @@
+Run: https://github.com/codeanttesting/codeant-demo/actions/runs/42308035025
+Selected output (setup and credential lines omitted):
+
+2026-11-06T22:54:15.0435683Z 📊 Findings: 48
+2026-11-06T22:54:15.0436263Z 🎯 Quality Gate: FAILED
+2026-11-06T22:54:15.0437216Z   CodeAnt - SAST         sast_rating_full_code              C      FAILED  sast_rating_full_code is C (same or worse than threshold C)
+2026-11-06T22:54:15.0439250Z   CodeAnt - SCA          sca_rating_full_code               D      FAILED  sca_rating_full_code is D (same or worse than threshold C)
+2026-11-06T22:54:16.7456100Z ##[warning]Security gate failed; warning mode is enabled
