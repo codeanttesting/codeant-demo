@@ -1,0 +1,32 @@
+name: CodeAnt security example
+
+on:
+  push:
+    branches: [examples/security-pipeline]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Policy rollout mode
+        type: choice
+        options: [enforce, warn]
+        default: enforce
+
+permissions:
+  contents: read
+
+concurrency:
+  group: codeant-security-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  security:
+    if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
+    uses: ./.github/workflows/codeant-security.yml
+    with:
+      mode: ${{ inputs.mode || 'warn' }}
+    secrets:
+      # This demo already has a legacy provider-token secret. New integrations
+      # should create a scoped CodeAnt token and use secrets.CODEANT_TOKEN.
+      CODEANT_TOKEN: ${{ secrets.CODEANT_TOKEN || secrets.ACCESS_TOKEN_GITHUB }}

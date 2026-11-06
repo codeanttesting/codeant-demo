@@ -1,0 +1,5 @@
+{
+  "secrets": {"severities": ["*"], "max_findings": 0},
+  "sast": {"severities": ["HIGH", "CRITICAL"], "max_findings": 0},
+  "sca": {"severities": ["HIGH", "CRITICAL"], "max_findings": 0}
+}
