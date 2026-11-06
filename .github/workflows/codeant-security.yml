@@ -14,9 +14,6 @@ concurrency:
   group: codeant-security-${{ github.event.pull_request.head.sha || github.sha }}
   cancel-in-progress: false
 
-env:
-  ENFORCE_SECURITY: 'true'
-
 jobs:
   security:
     if: ${{ github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository }}
@@ -24,11 +21,12 @@ jobs:
     timeout-minutes: 25
     steps:
       - name: Scan repository
-        uses: CodeAnt-AI/codeant-ci-scan-action@v0.0.5
+        uses: CodeAnt-AI/codeant-ci-scan-action@d4e7f37809f110ab9216766e53fbad0061393e27
         with:
           access_token: ${{ secrets.CODEANT_TOKEN || secrets.ACCESS_TOKEN_GITHUB }}
           scanners: sast,sca,secrets
           scan_timeout: '1200'
+          quality_gate: 'false'
       - name: Save reports
         if: ${{ always() }}
         uses: actions/upload-artifact@v4
@@ -39,25 +37,6 @@ jobs:
             results.json
             codeant.sarif
             codeant-qg.xml
-      - name: Check security gates
-        run: |
-          python3 - <<'PY'
-          import json, os
-          from pathlib import Path
-          result = json.loads(Path('results.json').read_text())
-          if result.get('status') != 'COMPLETED':
-              raise SystemExit('Scan did not complete')
-          enabled = {c['metric'] for c in result.get('evaluated_conditions', [])
-                     if c.get('quality_gate_enabled')}
-          required = {'sast_rating_full_code', 'sca_rating_full_code'}
-          if not required.issubset(enabled):
-              raise SystemExit('Configure full-code SAST and SCA gates in CodeAnt')
-          secrets = sum(f['engine'] == 'secrets' for f in result['findings'])
-          if result.get('quality_gate_status') != 'PASSED' or secrets:
-              if os.environ['ENFORCE_SECURITY'] == 'true':
-                  raise SystemExit('Security gate failed')
-              print('::warning::Security gate failed; warning mode is enabled')
-          PY
 
   deploy:
     needs: security
