@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 env:
-  ENFORCE_SECURITY: 'false'
+  ENFORCE_SECURITY: 'true'
 
 jobs:
   security:
