@@ -4,7 +4,7 @@ WARNING: This code contains intentional security vulnerabilities for SAST testin
 DO NOT use this code in production.
 """
 
-# CI fixture: validate the action quality_gate input against vulnerable code.
+# CI fixture: verify quality_gate=true blocks this vulnerable repository.
 import os
 import subprocess
 import sqlite3
